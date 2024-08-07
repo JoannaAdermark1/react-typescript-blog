@@ -1,17 +1,25 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import theme from './theme';
+import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import CreateEditPage from './pages/CreateEditPage';
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/post/:id" element={<PostPage />} />
-      <Route path="/create" element={<CreateEditPage />} />
-      <Route path="/edit/:id" element={<CreateEditPage />} />
-    </Routes>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/post/:id" component={PostPage} />
+          <Route path={['/create', '/edit/:id']} component={CreateEditPage} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 };
 
